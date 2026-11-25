@@ -1,6 +1,6 @@
 ---
 name: autogenerator-api-skills
-description: Develop, integrate, and troubleshoot ASP.NET Core backends that use asgmodel/WasmAI.AutoGenerator.API. Use for .NET 8 code generation with this package, BPR or CRUD scaffolding from EF Core ITModel entities, Builder/Share DTO or DSO layers, generated controllers and validators, DI, AutoMapper, SQL Server, or Swagger/JWT setup in a WasmAI AutoGenerator host. استخدمها لتوليد أو تعديل واجهات وطبقات BPR وتشخيص مشاكل تشغيل مكتبة WasmAI AutoGenerator.
+description: Develop, integrate, and troubleshoot ASP.NET Core backends that use asgmodel/WasmAI.AutoGenerator.API. Use for .NET 8 code generation with this package, BPR or CRUD scaffolding from EF Core ITModel entities, Builder/Share DTO or DSO layers, generated controllers, attribute-based Condition Validators, IConditionChecker, DI, AutoMapper, SQL Server, or Swagger/JWT setup in a WasmAI AutoGenerator host. استخدمها لتوليد أو تعديل واجهات وطبقات BPR وتشخيص مشاكل تشغيل مكتبة WasmAI AutoGenerator.
 ---
 
 # AutoGenerator API Skills
@@ -11,6 +11,7 @@ Powered by WasmAI.AutoGenerator.API. This skill guides an agent through the actu
 
 - [Generation and integration](references/generation.md): host registration, Builder/Share/DSO modes, CLI flags and verification.
 - [Repository landmarks](references/repository.md): source paths, compatibility and resource tracing.
+- [Condition Validators](references/condition-validators.md): ValidatorContext, state enums, RegisterConditionValidator, DataFilter, ConditionResult and nested conditions.
 - [Usage scenarios](references/examples.md): starter prompts and the evidence needed for future section-specific examples.
 
 ## Locate the active implementation
@@ -25,6 +26,10 @@ Powered by WasmAI.AutoGenerator.API. This skill guides an agent through the actu
 2. Use [generation and integration](references/generation.md) to choose the CLI mode, registration points, and output root. Generate in a disposable checkout or a dedicated scratch host when the active output is already customized. Check changed and new files after generation. Bring in only the requested output, preserving manual code and keeping EF migrations separate from scaffolding.
 3. Verify the complete request path. Compare generated request/response types and AutoMapper profiles with the actual entity and base generics. Trace DI registration for the concrete builder or service injected into the controller. Check routing, validation, and authorization against the host's conventions. Treat provider integrations such as Stripe and PayPal as separate application logic unless the installed implementation explicitly supplies them.
 4. Build the startup project after generation. Run existing relevant tests where available. If a development host and test database are available, verify a representative generated route and the requested behavior. For a write path, check persistence and the expected status using disposable data. Report the command, generated or modified files, and verification limits. If restore, build, or execution is blocked, give the exact failing step.
+
+## Implement condition-based business validation
+
+For tasks involving `AutoGenerator.Conditions`, read [Condition Validators](references/condition-validators.md) first. Inspect the host's existing validator, model, attribute discovery and checker contracts. Define typed state handlers and feature keys; use nested checker calls only where the requested business rule depends on another condition. Preserve failure propagation, verify result types and test missing data. Do not assume all validators are generated or that the example's application-specific model types exist in another project.
 
 ## Diagnose failures
 
