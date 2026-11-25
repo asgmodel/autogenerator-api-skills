@@ -47,6 +47,7 @@ flowchart TD
 | Host and model | .NET 8 snapshot, EF Core, ITModel, DbContext and assembly discovery |
 | Generation | Standard CRUD, BPR Builder DTO, Share DTO and DSO |
 | Integration | Controllers, repositories, validators, DI and AutoMapper |
+| Condition Validators | [Attribute registration, feature keys, typed filters and nested checks](skills/autogenerator-api-skills/references/condition-validators.md) |
 | Infrastructure | SQL Server, Swagger and authentication configuration |
 | Quality | Safe regeneration, build, tests and troubleshooting |
 
@@ -77,6 +78,7 @@ skills/
       generation.md
       repository.md
       examples.md
+      condition-validators.md
 README.md
 ```
 
