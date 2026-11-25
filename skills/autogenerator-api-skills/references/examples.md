@@ -10,6 +10,7 @@ These are agent prompts, not executed examples. Use the consuming host's actual 
 | Share DTO | Generate Share DTO output for the selected resource and inspect the diff. | Resolved generator version and generated files |
 | DSO | Generate DSO output for the selected resource and verify its contracts. | Resolved generator version and generated files |
 | Controllers and validation | Trace the create/read/update/delete routes and validate request mappings. | Actual generated routes, inherited actions and validators |
+| Validator template | Generate Product and Category validators with typed filters and nested conditions. | [C# template, examples and test matrix](validator-generation.md) |
 | Condition Validators | Implement a typed, attribute-registered business condition and a nested checker call. | [Maintainer example](condition-validators.md); host types, resolved package, registration and tests |
 | AI-native batch generation | Generate validators for selected entities from their own source declarations and domain rules. | [AI generation guide](ai-generation.md), per-model property coverage, build and tests |
 | Procedures | Integrate a business operation with the existing BPR layer and condition checker. | Existing procedure/service contracts, authorization, DI and behavior tests |

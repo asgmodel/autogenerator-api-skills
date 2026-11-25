@@ -11,7 +11,7 @@ This workflow adapts the maintainer's LAHJA-AI validator-generation approach int
 
 ## AI-generated condition validators
 
-Use [the condition validator reference](condition-validators.md) for the original ModelAI example. Generate one validator context per entity unless the host architecture requires otherwise.
+Use [the canonical validator generation workflow](validator-generation.md) for templates, concrete examples, dispatch and verification; see [the condition validator reference](condition-validators.md) for the original ModelAI example. Generate one validator context per entity unless the host architecture requires otherwise.
 
 1. Follow existing naming and namespace conventions (default: `{Model}ValidatorContext` and `{Model}ValidatorStates`). Inherit `ValidatorContext<TModel,TStates>`, implement `ITValidator`, and forward `IConditionChecker` to the base constructor.
 2. Account for every public property in a coverage review, but create only meaningful states from requirements. Required strings may need non-whitespace checks; optional strings may be null; false is not invalid for a bool; numeric zero and empty collections are rejected only when the contract requires it. Validate URLs and related IDs according to actual domain rules. Preserve explicit enum values; do not copy ServiceValidator's 6200 range or invent globally unique IDs.

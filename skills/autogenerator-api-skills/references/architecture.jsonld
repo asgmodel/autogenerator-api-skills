@@ -22,7 +22,7 @@
   },
   "@id": "https://github.com/asgmodel/autogenerator-api-skills#Architecture",
   "@type": "ArchitectureOntology",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "@graph": [
     {
       "@id": "#Inspect",
@@ -61,8 +61,11 @@
       "requiresCheck": [
         "#ConditionContract",
         "#ScopeIsolation",
-        "#Build"
-      ]
+        "#Build",
+        "#ConditionDispatch"
+      ],
+      "reference": "references/validator-generation.md",
+      "generates": "#ConditionState"
     },
     {
       "@id": "#ConditionChecker",
@@ -157,6 +160,25 @@
     },
     {
       "@id": "#Behavior",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#ConditionState",
+      "@type": "Artifact",
+      "uses": "#DataFilter",
+      "generates": "#ConditionResult",
+      "requiresCheck": "#ConditionDispatch"
+    },
+    {
+      "@id": "#DataFilter",
+      "@type": "Contract"
+    },
+    {
+      "@id": "#ConditionResult",
+      "@type": "Contract"
+    },
+    {
+      "@id": "#ConditionDispatch",
       "@type": "Verification"
     }
   ]

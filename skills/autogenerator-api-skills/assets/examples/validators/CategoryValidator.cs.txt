@@ -1,0 +1,36 @@
+// Illustrative adaptation: replace host namespaces and resolve dependency imports.
+using System.Threading.Tasks;
+using AutoGenerator.Conditions;
+using Example.Models;
+using v1.Validators;
+using v1.Validators.Conditions;
+using WasmAI.ConditionChecker.Base;
+
+namespace Example.Validators;
+
+public enum CategoryValidatorStates
+{
+    IsFound,
+    IsActive
+}
+
+public class CategoryValidatorContext
+    : ValidatorContext<Category, CategoryValidatorStates>, ITValidator
+{
+    public CategoryValidatorContext(IConditionChecker checker) : base(checker) { }
+    protected override void InitializeConditions() { }
+
+    [RegisterConditionValidator(typeof(CategoryValidatorStates),
+        CategoryValidatorStates.IsFound, "Category not found.")]
+    private Task<ConditionResult> ValidateFound(DataFilter<string, Category> f)
+        => f.Share is not null
+            ? ConditionResult.ToSuccessAsync(f.Share)
+            : ConditionResult.ToFailureAsync("Category not found.");
+
+    [RegisterConditionValidator(typeof(CategoryValidatorStates),
+        CategoryValidatorStates.IsActive, "Category is missing or inactive.")]
+    private Task<ConditionResult> ValidateActive(DataFilter<string, Category> f)
+        => f.Share?.IsActive == true
+            ? ConditionResult.ToSuccessAsync(f.Share)
+            : ConditionResult.ToFailureAsync("Category is missing or inactive.");
+}

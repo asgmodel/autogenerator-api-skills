@@ -47,6 +47,7 @@ flowchart TD
 | Host and model | .NET 8 snapshot, EF Core, ITModel, DbContext and assembly discovery |
 | Generation | Standard CRUD, BPR Builder DTO, Share DTO and DSO |
 | Integration | Controllers, repositories, validators, DI and AutoMapper |
+| Validator generation | [Canonical C# template, Product/Category examples and checker usage](skills/autogenerator-api-skills/references/validator-generation.md) |
 | Condition Validators | [Attribute registration, feature keys, typed filters and nested checks](skills/autogenerator-api-skills/references/condition-validators.md) |
 | Infrastructure | SQL Server, Swagger and authentication configuration |
 | AI-native generation | [Agent-driven model/validator generation, DI and procedure integration](skills/autogenerator-api-skills/references/ai-generation.md) |
@@ -76,11 +77,14 @@ skills/
     SKILL.md
     agents/openai.yaml
     assets/icon.svg
+    assets/templates/ValidatorContext.cs.txt
+    assets/examples/validators/  # Model and validator examples
     references/
       generation.md
       repository.md
       examples.md
       condition-validators.md
+      validator-generation.md
       ai-generation.md
       architecture.jsonld
 README.md

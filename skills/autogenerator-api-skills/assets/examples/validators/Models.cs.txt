@@ -1,0 +1,25 @@
+// Illustrative entities only: adapt keys, namespaces, relationships and ITModel
+// to the host's existing EF Core configuration. No EF migration is implied.
+using System.Collections.Generic;
+using AutoGenerator;
+
+namespace Example.Models;
+
+public class Category : ITModel
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public bool IsActive { get; set; }
+}
+
+public class Product : ITModel
+{
+    public string Id { get; set; } = "";
+    public string Name { get; set; } = "";
+    public string? Website { get; set; }
+    public string Kind { get; set; } = "";
+    public bool IsActive { get; set; }
+    public decimal Price { get; set; }
+    public string CategoryId { get; set; } = "";
+    public ICollection<string> Tags { get; set; } = new List<string>();
+}

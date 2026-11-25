@@ -4,6 +4,8 @@ Maintainer-supplied application example for `AutoGenerator.Conditions`. This is 
 
 For agent-native generation, async return correctness, registration, caching and scoped DI, follow [AI-native generation and integration](ai-generation.md). The original example below remains unchanged.
 
+For the reusable template, complete illustrative examples and consumer invocation, use [Validator generation](validator-generation.md) first.
+
 ## Design
 
 | Component | Role in the example |

@@ -12,6 +12,7 @@ Powered by WasmAI.AutoGenerator.API. This skill guides an agent through the actu
 - [Generation and integration](references/generation.md): host registration, Builder/Share/DSO modes, CLI flags and verification.
 - [Repository landmarks](references/repository.md): source paths, compatibility and resource tracing.
 - [AI-native generation and integration](references/ai-generation.md): model/validator synthesis, DI lifetimes, safe procedures and verification. Use the [architecture ontology](references/architecture.jsonld) for dependency ordering and checks.
+- [Validator generation — canonical workflow](references/validator-generation.md): reusable C# template, concrete entities, nested/composite states, checker invocation and verification matrix. Load first for validator tasks.
 - [Condition Validators](references/condition-validators.md): ValidatorContext, state enums, RegisterConditionValidator, DataFilter, ConditionResult and nested conditions.
 - [Usage scenarios](references/examples.md): starter prompts and the evidence needed for future section-specific examples.
 
@@ -34,7 +35,7 @@ For generation, integration or repair tasks, first load the architecture ontolog
 
 ## Implement condition-based business validation
 
-For tasks involving `AutoGenerator.Conditions`, read [Condition Validators](references/condition-validators.md) first. Inspect the host's existing validator, model, attribute discovery and checker contracts. Define typed state handlers and feature keys; use nested checker calls only where the requested business rule depends on another condition. Preserve failure propagation, verify result types and test missing data. Do not assume all validators are generated or that the example's application-specific model types exist in another project.
+For tasks involving `AutoGenerator.Conditions`, read [Validator generation — canonical workflow](references/validator-generation.md) first, then [Condition Validators](references/condition-validators.md) for the original example. Inspect the host's existing validator, model, attribute discovery and checker contracts. Define typed state handlers and feature keys; use nested checker calls only where the requested business rule depends on another condition. Preserve failure propagation, verify result types and test missing data. Do not assume all validators are generated or that the example's application-specific model types exist in another project.
 
 ## Diagnose failures
 
