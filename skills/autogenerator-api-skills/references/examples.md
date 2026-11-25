@@ -11,6 +11,8 @@ These are agent prompts, not executed examples. Use the consuming host's actual 
 | DSO | Generate DSO output for the selected resource and verify its contracts. | Resolved generator version and generated files |
 | Controllers and validation | Trace the create/read/update/delete routes and validate request mappings. | Actual generated routes, inherited actions and validators |
 | Condition Validators | Implement a typed, attribute-registered business condition and a nested checker call. | [Maintainer example](condition-validators.md); host types, resolved package, registration and tests |
+| AI-native batch generation | Generate validators for selected entities from their own source declarations and domain rules. | [AI generation guide](ai-generation.md), per-model property coverage, build and tests |
+| Procedures | Integrate a business operation with the existing BPR layer and condition checker. | Existing procedure/service contracts, authorization, DI and behavior tests |
 | DI and mapping | Diagnose a missing repository registration or AutoMapper map. | First diagnostic, constructor and registration code |
 | SQL Server and auth | Verify development database registration and Swagger/JWT without exposing secrets. | Redacted configuration, middleware and test environment |
 | Regeneration and QA | Regenerate without losing custom code; show changes and run applicable checks. | Baseline, diff, build and available tests |

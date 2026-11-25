@@ -2,6 +2,8 @@
 
 Maintainer-supplied application example for `AutoGenerator.Conditions`. This is a host-specific usage pattern, not a generated file or an independently compiled example. Resolve the actual library version and inspect the condition registration and dispatch implementation before adapting it.
 
+For agent-native generation, async return correctness, registration, caching and scoped DI, follow [AI-native generation and integration](ai-generation.md). The original example below remains unchanged.
+
 ## Design
 
 | Component | Role in the example |

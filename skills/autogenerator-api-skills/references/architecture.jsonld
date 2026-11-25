@@ -1,0 +1,163 @@
+{
+  "@context": {
+    "@vocab": "https://github.com/asgmodel/autogenerator-api-skills#",
+    "dependsOn": {
+      "@type": "@id"
+    },
+    "uses": {
+      "@type": "@id"
+    },
+    "generates": {
+      "@type": "@id"
+    },
+    "requiresCheck": {
+      "@type": "@id"
+    },
+    "lifetime": {
+      "@type": "@id"
+    },
+    "reference": {
+      "@type": "@id"
+    }
+  },
+  "@id": "https://github.com/asgmodel/autogenerator-api-skills#Architecture",
+  "@type": "ArchitectureOntology",
+  "version": "1.0.0",
+  "@graph": [
+    {
+      "@id": "#Inspect",
+      "@type": "Stage",
+      "reference": "references/ai-generation.md#inspect-and-plan"
+    },
+    {
+      "@id": "#Model",
+      "@type": "Artifact",
+      "dependsOn": "#Inspect",
+      "requiresCheck": [
+        "#ModelContract",
+        "#Build"
+      ]
+    },
+    {
+      "@id": "#Generator",
+      "@type": "Component",
+      "dependsOn": "#Model",
+      "generates": "#BPR",
+      "reference": "references/generation.md"
+    },
+    {
+      "@id": "#BPR",
+      "@type": "Artifact",
+      "requiresCheck": [
+        "#Contracts",
+        "#Build"
+      ]
+    },
+    {
+      "@id": "#Validator",
+      "@type": "Artifact",
+      "dependsOn": "#Model",
+      "uses": "#ConditionChecker",
+      "requiresCheck": [
+        "#ConditionContract",
+        "#ScopeIsolation",
+        "#Build"
+      ]
+    },
+    {
+      "@id": "#ConditionChecker",
+      "@type": "Component",
+      "lifetime": "#Scoped",
+      "uses": "#FactoryInjector",
+      "requiresCheck": "#InjectorAssignment"
+    },
+    {
+      "@id": "#FactoryInjector",
+      "@type": "Component",
+      "lifetime": "#Scoped",
+      "uses": "#DbContext"
+    },
+    {
+      "@id": "#DbContext",
+      "@type": "Component",
+      "lifetime": "#Scoped"
+    },
+    {
+      "@id": "#Procedure",
+      "@type": "Artifact",
+      "dependsOn": [
+        "#BPR",
+        "#Validator"
+      ],
+      "requiresCheck": [
+        "#ProcedureContract",
+        "#Build"
+      ],
+      "reference": "references/ai-generation.md#procedures-and-integration"
+    },
+    {
+      "@id": "#Integration",
+      "@type": "Stage",
+      "dependsOn": [
+        "#Procedure",
+        "#BPR",
+        "#Validator"
+      ],
+      "requiresCheck": [
+        "#Contracts",
+        "#ScopeIsolation",
+        "#Build",
+        "#Behavior"
+      ]
+    },
+    {
+      "@id": "#Singleton",
+      "@type": "Lifetime",
+      "marker": "ITSingleton",
+      "rule": "Never capture scoped dependencies or request-specific mutable state."
+    },
+    {
+      "@id": "#Scoped",
+      "@type": "Lifetime",
+      "marker": "ITScope",
+      "rule": "Verify the actual scanner or explicit registration; one instance per scope."
+    },
+    {
+      "@id": "#Transient",
+      "@type": "Lifetime",
+      "marker": "ITTransient"
+    },
+    {
+      "@id": "#ModelContract",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#Contracts",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#ConditionContract",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#ScopeIsolation",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#InjectorAssignment",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#ProcedureContract",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#Build",
+      "@type": "Verification"
+    },
+    {
+      "@id": "#Behavior",
+      "@type": "Verification"
+    }
+  ]
+}

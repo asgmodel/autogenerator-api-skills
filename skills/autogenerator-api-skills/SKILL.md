@@ -11,8 +11,13 @@ Powered by WasmAI.AutoGenerator.API. This skill guides an agent through the actu
 
 - [Generation and integration](references/generation.md): host registration, Builder/Share/DSO modes, CLI flags and verification.
 - [Repository landmarks](references/repository.md): source paths, compatibility and resource tracing.
+- [AI-native generation and integration](references/ai-generation.md): model/validator synthesis, DI lifetimes, safe procedures and verification. Use the [architecture ontology](references/architecture.jsonld) for dependency ordering and checks.
 - [Condition Validators](references/condition-validators.md): ValidatorContext, state enums, RegisterConditionValidator, DataFilter, ConditionResult and nested conditions.
 - [Usage scenarios](references/examples.md): starter prompts and the evidence needed for future section-specific examples.
+
+## AI-native architecture workflow
+
+For generation, integration or repair tasks, first load the architecture ontology and the AI-native generation guide. Select relevant stages; inspect actual package/source and existing target code, let the agent implement missing business logic itself, and use the upstream generator for supported scaffolding. Verify service lifetimes, injector assignment, typed condition dispatch and actual procedure contracts before integration. Never require external AI inference or invent missing APIs. Record verification evidence in the target project only.
 
 ## Locate the active implementation
 

@@ -49,6 +49,8 @@ flowchart TD
 | Integration | Controllers, repositories, validators, DI and AutoMapper |
 | Condition Validators | [Attribute registration, feature keys, typed filters and nested checks](skills/autogenerator-api-skills/references/condition-validators.md) |
 | Infrastructure | SQL Server, Swagger and authentication configuration |
+| AI-native generation | [Agent-driven model/validator generation, DI and procedure integration](skills/autogenerator-api-skills/references/ai-generation.md) |
+| Architecture | [Minimal dependency and verification ontology](skills/autogenerator-api-skills/references/architecture.jsonld) |
 | Quality | Safe regeneration, build, tests and troubleshooting |
 
 Read the [core skill](skills/autogenerator-api-skills/SKILL.md), [generation guide](skills/autogenerator-api-skills/references/generation.md), [source compatibility notes](skills/autogenerator-api-skills/references/repository.md) and [usage scenarios](skills/autogenerator-api-skills/references/examples.md).
@@ -79,6 +81,8 @@ skills/
       repository.md
       examples.md
       condition-validators.md
+      ai-generation.md
+      architecture.jsonld
 README.md
 ```
 
