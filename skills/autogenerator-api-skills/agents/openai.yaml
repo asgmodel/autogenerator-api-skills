@@ -1,0 +1,9 @@
+interface:
+  display_name: AutoGenerator API Skills
+  short_description: توليد وتطوير واجهات ASP.NET Core بمكتبة WasmAI
+  default_prompt: Use $autogenerator-api-skills to generate CRUD/BPR layers for
+    an entity in my ASP.NET Core project and verify the build.
+  icon_small: ./assets/icon.svg
+  icon_large: ./assets/icon.svg
+policy:
+  allow_implicit_invocation: true
