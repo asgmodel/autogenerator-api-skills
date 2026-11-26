@@ -22,12 +22,12 @@
   },
   "@id": "https://github.com/asgmodel/autogenerator-api-skills#Architecture",
   "@type": "ArchitectureOntology",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "@graph": [
     {
       "@id": "#Inspect",
       "@type": "Stage",
-      "reference": "references/ai-generation.md#inspect-and-plan"
+      "reference": "references/generation.md#1-inspect-the-target-project"
     },
     {
       "@id": "#Model",
@@ -36,12 +36,14 @@
       "requiresCheck": [
         "#ModelContract",
         "#Build"
-      ]
+      ],
+      "reference": "references/generation.md#2-select-or-create-itmodel-entities",
+      "marker": "ITModel"
     },
     {
       "@id": "#Generator",
       "@type": "Component",
-      "dependsOn": "#Model",
+      "dependsOn": "#ModeSelection",
       "generates": "#BPR",
       "reference": "references/generation.md"
     },
@@ -51,12 +53,13 @@
       "requiresCheck": [
         "#Contracts",
         "#Build"
-      ]
+      ],
+      "reference": "references/generation.md#6-review-generated-files-and-organize-layers"
     },
     {
       "@id": "#Validator",
       "@type": "Artifact",
-      "dependsOn": "#Model",
+      "dependsOn": "#ScaffoldReview",
       "uses": "#ConditionChecker",
       "requiresCheck": [
         "#ConditionContract",
@@ -103,7 +106,6 @@
       "@id": "#Integration",
       "@type": "Stage",
       "dependsOn": [
-        "#Procedure",
         "#BPR",
         "#Validator"
       ],
@@ -112,7 +114,8 @@
         "#ScopeIsolation",
         "#Build",
         "#Behavior"
-      ]
+      ],
+      "reference": "references/generation.md#7-complete-validators-and-integrate-layers"
     },
     {
       "@id": "#Singleton",
@@ -191,6 +194,37 @@
       "@id": "#FailClosed",
       "@type": "Verification",
       "reference": "references/condition-checker.md#result-factories-and-consumers"
+    },
+    {
+      "@id": "#LibrarySetup",
+      "@type": "Stage",
+      "dependsOn": "#Model",
+      "reference": "references/generation.md#3-install-or-reuse-the-library"
+    },
+    {
+      "@id": "#HostSetup",
+      "@type": "Stage",
+      "dependsOn": "#LibrarySetup",
+      "uses": "#DbContext",
+      "requiresCheck": "#Build",
+      "reference": "references/generation.md#4-configure-dbcontext-and-programcs"
+    },
+    {
+      "@id": "#ModeSelection",
+      "@type": "Stage",
+      "dependsOn": "#HostSetup",
+      "reference": "references/generation.md#5-recommend-one-bpr-mode-and-hand-off-the-command"
+    },
+    {
+      "@id": "#ScaffoldReview",
+      "@type": "Stage",
+      "dependsOn": "#Generator",
+      "uses": "#BPR",
+      "requiresCheck": [
+        "#Contracts",
+        "#Build"
+      ],
+      "reference": "references/generation.md#6-review-generated-files-and-organize-layers"
     }
   ]
 }

@@ -4,6 +4,8 @@ This workflow adapts the maintainer's LAHJA-AI validator-generation approach int
 
 ## Inspect and plan
 
+For complete generation, [core backend generation procedure](generation.md) owns the ordered preparation and BPR handoff steps. Do not duplicate or bypass those gates. This guide applies to the subsequent AI-authored business rules, service integration and scoped dependencies.
+
 - Read the target project, resolved package versions, model classes, existing generated layers and custom code, actual startup and registration, and one comparable working resource. Keep the baseline build and git diff in the target workspace.
 - Identify requirements for each property, including nullability, requiredness, identity, foreign keys, collections and business constraints. For batch generation, map each requested entity to its own source declaration, namespace and rules. Never pass a shared unrelated model structure as the declaration of every model.
 - Determine which parts should come from the upstream generator and which require agent-authored business logic. Preserve existing state IDs, feature keys, API contracts, generated roots, manual logic and authorization.

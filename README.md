@@ -27,18 +27,21 @@ Open the target ASP.NET Core project in your coding agent and request, for examp
 
 > Use autogenerator-api-skills to inspect my Product entity, generate Builder CRUD in an isolated checkout, preserve custom code, and report the build and test results.
 
-The agent follows this workflow:
+The agent follows the [mandatory core generation procedure](skills/autogenerator-api-skills/references/generation.md) for new or complete backends. For targeted fixes it reuses existing stages.
 
 ```mermaid
 flowchart TD
-    A[Inspect host and resolved package] --> B[Check ITModel and DbContext]
-    B --> C[Select generation mode]
-    C --> D[Generate in isolated workspace]
-    D --> E[Inspect diff and contracts]
-    E --> F[Verify DI, mapping and routes]
-    F --> G[Build and run available tests]
-    G --> H[Report evidence and limitations]
+    A[Inspect target project] --> B[Select or create ITModel entities]
+    B --> C[Install or reuse compatible library]
+    C --> D[Configure DbContext and Program.cs]
+    D --> E[Recommend one BPR mode and hand off command]
+    E --> F[Generate and review files]
+    F --> G[Complete condition validators]
+    G --> H[Integrate BPR layers]
+    H --> I[Build, test and report evidence]
 ```
+
+The agent provides the package link, actual project directory and ready-to-run generation command; execution is optional when requested and available. The default for a simple new CRUD resource is Builder, not every mode at once.
 
 ## Sections
 
@@ -66,9 +69,10 @@ dotnet run -- generate
 dotnet run -- generate /bpr c:build
 dotnet run -- generate /bpr c:share
 dotnet run -- generate /bpr c:dso
+dotnet run -- generate /bpr c:all
 ```
 
-Select one mode for the requested task; these are alternatives, not a mandatory sequence. Check the generated files, preserve manual logic, build and run available tests. See the generation guide for merge and auth flags and their caveats.
+Select one mode for the requested task; these are alternatives, not a mandatory sequence. The reviewed parser handles c:all differently from SetGenType; verify actual output before recommending it. For the source-documented installation see [NuGet](https://www.nuget.org/packages/WasmAI.AutoGenerator.API) and the core procedure. Check the generated files, preserve manual logic, build and run available tests. See the generation guide for merge and auth flags and their caveats.
 
 ## Repository layout
 
