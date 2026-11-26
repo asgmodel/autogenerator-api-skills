@@ -1,0 +1,36 @@
+name: Verify skills
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 scripts/check_skill.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check Skills CLI discovery
+        run: |
+          npx --yes skills add . --list | tee /tmp/skill-list.txt
+          grep -F 'autogenerator-api-skills' /tmp/skill-list.txt
+        shell: bash
+  validator-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: bash scripts/test-validators.sh
