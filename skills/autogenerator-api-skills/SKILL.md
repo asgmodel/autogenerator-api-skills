@@ -9,6 +9,8 @@ Use the actual WasmAI libraries and host architecture. The coding agent authors 
 
 ## Route the task
 
+Start by reading [architecture.jsonld](references/architecture.jsonld). Its `UsageExample` nodes map ready-to-use requests to relevant architecture targets. Match the actual intent by meaning, not exact wording. Always inspect the target first; reuse completed stages and execute only applicable dependencies. The ontology is a reference, not a separately executable tool.
+
 - Model, CRUD, BPR, DTO, DSO, repository or controller: [generation](references/generation.md) and [repository landmarks](references/repository.md).
 - Validator, condition, checker, feature value or nested rule: [ConditionChecker contract](references/condition-checker.md), then [validator generation](references/validator-generation.md). Use its reusable template and examples.
 - Host registration, DI, procedures or integration: [AI integration](references/ai-generation.md).

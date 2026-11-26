@@ -32,6 +32,19 @@ for id_, node in graph.items():
             require(target in graph, f"{id_}: dangling {rel} {target}")
     if "reference" in node:
         require((skill / node["reference"].split("#", 1)[0]).is_file(), f"{id_}: missing reference")
+examples = [n for n in graph.values() if n.get("@type") == "UsageExample"]
+require(len(examples) >= 5, "missing core usage examples")
+require(len({n.get("prompt") for n in examples}) == len(examples), "duplicate usage prompts")
+require(ontology.get("installCommand") == "npx skills add asgmodel/autogenerator-api-skills", "missing installation command")
+require(bool(ontology.get("invocationRule")), "missing invocation rule")
+readme = (root / "README.md").read_text(encoding="utf-8")
+for example in examples:
+    require(bool(example.get("title")), "missing example title")
+    require("autogenerator-api-skills" in example.get("prompt", ""), "missing named skill invocation")
+    require(bool(example.get("scope")), "missing example scope")
+    require(bool(example.get("uses")), "missing example architecture target")
+    require("dependsOn" not in example, "example must not impose execution dependencies")
+    require(example.get("prompt", "") in readme, "README example out of sync")
 seen, active = set(), set()
 def visit(id_):
     if id_ in active:

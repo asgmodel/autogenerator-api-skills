@@ -22,7 +22,7 @@
   },
   "@id": "https://github.com/asgmodel/autogenerator-api-skills#Architecture",
   "@type": "ArchitectureOntology",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "@graph": [
     {
       "@id": "#Inspect",
@@ -225,6 +225,59 @@
         "#Build"
       ],
       "reference": "references/generation.md#6-review-generated-files-and-organize-layers"
+    },
+    {
+      "@id": "#CreateBackendExample",
+      "@type": "UsageExample",
+      "title": "توليد مشروع كامل",
+      "prompt": "استخدم autogenerator-api-skills لإنشاء نظام إدارة المستشفيات من الصفر.",
+      "uses": "#Integration",
+      "scope": "Follow the complete generation procedure; recommend one BPR mode and command, complete applicable business conditions and verify."
+    },
+    {
+      "@id": "#ExtendBackendExample",
+      "@type": "UsageExample",
+      "title": "تطوير مشروع موجود",
+      "prompt": "استخدم autogenerator-api-skills لفحص مشروعي الحالي وتجهيز الموديلات باستخدام ITModel وتوليد الطبقات الناقصة.",
+      "uses": [
+        "#Model",
+        "#ScaffoldReview"
+      ],
+      "scope": "Inspect existing host and models; add markers only to selected entities, reuse installed dependencies, generate missing layers and preserve custom code."
+    },
+    {
+      "@id": "#GenerateValidatorsExample",
+      "@type": "UsageExample",
+      "title": "توليد Validators فقط",
+      "prompt": "استخدم autogenerator-api-skills لتوليد Validators لجميع الموديلات المطلوبة وربط الشروط باستخدام IConditionChecker.",
+      "uses": "#Validator",
+      "scope": "Reuse existing scaffolding; generate only requested conditions and required integration. Do not regenerate unrelated layers."
+    },
+    {
+      "@id": "#AddModelExample",
+      "@type": "UsageExample",
+      "title": "إضافة موديل جديد",
+      "prompt": "استخدم autogenerator-api-skills لإضافة موديل Coupon وربطه بالطلبات وتوليد طبقات BPR والشروط اللازمة.",
+      "uses": [
+        "#Model",
+        "#ScaffoldReview",
+        "#Validator"
+      ],
+      "scope": "Extend relevant entity relationships and context; verify assembly discovery and preserve unrelated generated/custom files."
+    },
+    {
+      "@id": "#AuditArchitectureExample",
+      "@type": "UsageExample",
+      "title": "فحص المعمارية وإصلاحها",
+      "prompt": "استخدم autogenerator-api-skills لتحليل المعمارية الحالية وإصلاح أخطاء DI والـ Validators والـ Repositories والتحقق من البناء.",
+      "uses": [
+        "#ConditionChecker",
+        "#BPR",
+        "#Integration"
+      ],
+      "scope": "Diagnose actual host and first build/runtime failures; repair evidenced issues, preserve contracts and verify."
     }
-  ]
+  ],
+  "installCommand": "npx skills add asgmodel/autogenerator-api-skills",
+  "invocationRule": "Invoke the installed skill by name with the target project and desired outcome. Always inspect the target first. Match UsageExample intent by meaning, not exact wording. Treat uses links as relevant architecture targets, not mandatory execution lists. Resolve only applicable dependencies, reuse verified stages, preserve scope, and report actual evidence. This is an agent-readable reference, not an executable generator or task log."
 }

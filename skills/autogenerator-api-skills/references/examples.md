@@ -18,6 +18,10 @@ These are agent prompts, not executed examples. Use the consuming host's actual 
 | SQL Server and auth | Verify development database registration and Swagger/JWT without exposing secrets. | Redacted configuration, middleware and test environment |
 | Regeneration and QA | Regenerate without losing custom code; show changes and run applicable checks. | Baseline, diff, build and available tests |
 
+## Getting started
+
+See the five general user-facing prompts in [the main ontology](architecture.jsonld) and [README](../../../README.md). This reference covers narrower technical scenarios and evidence requirements.
+
 ## Adding a verified example
 
 For each section, record the source version, required host files, exact command or API, expected output paths, actual diff and test results. Keep secrets and real customer data outside the repository. Add only verified commands; do not infer unsupported generator methods or flags. A maintainer-supplied Condition Validator example is now available; its runtime checks and detailed examples of other generator modes and procedures remain pending.

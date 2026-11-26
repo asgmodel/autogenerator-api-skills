@@ -23,6 +23,8 @@ To inspect the unpacked local project from its root instead, use `npx skills add
 
 ## Use
 
+Open the target project in a compatible coding agent after installation. Invoke the skill by name in natural language; no separate ontology installation or execution is required. The [architecture ontology](skills/autogenerator-api-skills/references/architecture.jsonld) maps these requests to applicable stages.
+
 Open the target ASP.NET Core project in your coding agent and request, for example:
 
 > Use autogenerator-api-skills to inspect my Product entity, generate Builder CRUD in an isolated checkout, preserve custom code, and report the build and test results.
@@ -42,6 +44,30 @@ flowchart TD
 ```
 
 The agent provides the package link, actual project directory and ready-to-run generation command; execution is optional when requested and available. The default for a simple new CRUD resource is Builder, not every mode at once.
+
+## Ready-to-use requests (Arabic)
+
+Copy a request into your coding agent and adapt the domain to your project. These five prompts mirror the UsageExample nodes in the main ontology.
+
+### توليد مشروع كامل
+
+> استخدم autogenerator-api-skills لإنشاء نظام إدارة المستشفيات من الصفر.
+
+### تطوير مشروع موجود
+
+> استخدم autogenerator-api-skills لفحص مشروعي الحالي وتجهيز الموديلات باستخدام ITModel وتوليد الطبقات الناقصة.
+
+### توليد Validators فقط
+
+> استخدم autogenerator-api-skills لتوليد Validators لجميع الموديلات المطلوبة وربط الشروط باستخدام IConditionChecker.
+
+### إضافة موديل جديد
+
+> استخدم autogenerator-api-skills لإضافة موديل Coupon وربطه بالطلبات وتوليد طبقات BPR والشروط اللازمة.
+
+### فحص المعمارية وإصلاحها
+
+> استخدم autogenerator-api-skills لتحليل المعمارية الحالية وإصلاح أخطاء DI والـ Validators والـ Repositories والتحقق من البناء.
 
 ## Sections
 
