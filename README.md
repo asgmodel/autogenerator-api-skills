@@ -47,6 +47,7 @@ flowchart TD
 | Host and model | .NET 8 snapshot, EF Core, ITModel, DbContext and assembly discovery |
 | Generation | Standard CRUD, BPR Builder DTO, Share DTO and DSO |
 | Integration | Controllers, repositories, validators, DI and AutoMapper |
+| ConditionChecker runtime | [Source-reviewed contracts, binding, lookup and failure behavior](skills/autogenerator-api-skills/references/condition-checker.md) |
 | Validator generation | [Canonical C# template, Product/Category examples and checker usage](skills/autogenerator-api-skills/references/validator-generation.md) |
 | Condition Validators | [Attribute registration, feature keys, typed filters and nested checks](skills/autogenerator-api-skills/references/condition-validators.md) |
 | Infrastructure | SQL Server, Swagger and authentication configuration |
@@ -84,6 +85,7 @@ skills/
       repository.md
       examples.md
       condition-validators.md
+      condition-checker.md
       validator-generation.md
       ai-generation.md
       architecture.jsonld
@@ -95,3 +97,12 @@ README.md
 Verify discovery with the `--list` command and install the skill from the public repository. The Skills.sh leaderboard is based on installation telemetry; publication alone does not guarantee immediate listing. See the [Skills.sh FAQ](https://www.skills.sh/docs/faq).
 
 Keep detailed generator and procedure examples in the references directory as they become available. Do not claim runtime compatibility without checking the resolved package and running the relevant tests. No upstream source code is bundled in this repository; the provided skill references an upstream source snapshot.
+
+## Verification
+
+```bash
+python3 scripts/check_skill.py
+bash scripts/test-validators.sh
+```
+
+The runtime harness requires Git, .NET 8 and network access to GitHub/NuGet. It tests the pinned Checker source (declares 1.0.0) and package 1.0.1 referenced by the AutoGenerator API, using actual wrapper source and an in-memory host adapter. It compiles the shared example assets; it does not replace the target application's EF integration tests. Check GitHub Actions or the local exit status for actual results.

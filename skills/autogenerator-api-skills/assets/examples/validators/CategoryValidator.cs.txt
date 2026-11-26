@@ -25,12 +25,12 @@ public class CategoryValidatorContext
     private Task<ConditionResult> ValidateFound(DataFilter<string, Category> f)
         => f.Share is not null
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Category not found.");
+            : ConditionResult.ToFailureAsync(null, "Category not found.");
 
     [RegisterConditionValidator(typeof(CategoryValidatorStates),
         CategoryValidatorStates.IsActive, "Category is missing or inactive.")]
     private Task<ConditionResult> ValidateActive(DataFilter<string, Category> f)
         => f.Share?.IsActive == true
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Category is missing or inactive.");
+            : ConditionResult.ToFailureAsync(null, "Category is missing or inactive.");
 }

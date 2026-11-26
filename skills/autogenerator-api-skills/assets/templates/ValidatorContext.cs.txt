@@ -1,10 +1,9 @@
-// Replace tokens using the actual target project. Do not compile this template as-is.
-// Add the installed namespaces for DataFilter, ConditionResult, RegisterConditionValidator,
-// ValidatorContext and IConditionChecker; resolve them from a working host validator.
+// Replace all __TOKENS__ using the target host. This is a template, not a compiled source file.
 using System.Threading.Tasks;
 using AutoGenerator.Conditions;
+using WasmAI.ConditionChecker.Base;
 using __MODEL_NAMESPACE__;
-using __VALIDATOR_BASE_NAMESPACE__;
+using __HOST_VALIDATOR_NAMESPACE__;
 
 namespace __VALIDATOR_NAMESPACE__;
 
@@ -12,11 +11,6 @@ public enum __MODEL__ValidatorStates
 {
     IsFound,
     __STATE__
-}
-
-public static class __MODEL__ValidatorKeys
-{
-    public const string __FEATURE__ = "__FEATURE_KEY__";
 }
 
 public class __MODEL__ValidatorContext
@@ -31,19 +25,19 @@ public class __MODEL__ValidatorContext
     private Task<ConditionResult> ValidateFound(DataFilter<string, __MODEL__> f)
         => f.Share is not null
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Model is not found.");
+            : ConditionResult.ToFailureAsync(null, "Model is not found.");
 
+    // Dynamic comparison: no attribute Value. For required value types use nullable TValue
+    // and validate presence; for fixed rules set a matching typed attribute constant instead.
     [RegisterConditionValidator(typeof(__MODEL__ValidatorStates),
-        __MODEL__ValidatorStates.__STATE__, "__FAILURE_MESSAGE__",
-        Value = __MODEL__ValidatorKeys.__FEATURE__)]
-    private Task<ConditionResult> ValidateFeature(DataFilter<__VALUE_TYPE__, __MODEL__> f)
+        __MODEL__ValidatorStates.__STATE__, "__FAILURE_MESSAGE__")]
+    private Task<ConditionResult> ValidateRule(DataFilter<__VALUE_TYPE__, __MODEL__> f)
     {
         if (f.Share is null)
-            return ConditionResult.ToFailureAsync("Model is not found.");
+            return ConditionResult.ToFailureAsync(null, "Model is not found.");
 
-        // Replace with a real predicate over f.Share and, if relevant, f.Value.
         return __PREDICATE__
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("__FAILURE_MESSAGE__");
+            : ConditionResult.ToFailureAsync(null, "__FAILURE_MESSAGE__");
     }
 }

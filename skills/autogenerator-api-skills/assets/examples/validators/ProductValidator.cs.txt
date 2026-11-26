@@ -29,12 +29,6 @@ public enum ProductValidatorStates
     CanPublish
 }
 
-public static class ProductFeatureKeys
-{
-    public const string Active = "is_active";
-    public const string Kind = "kind";
-}
-
 public static class ProductKinds
 {
     public const string Digital = "digital";
@@ -52,42 +46,41 @@ public class ProductValidatorContext
     private Task<ConditionResult> ValidateFound(DataFilter<string, Product> f)
         => f.Share is not null
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Product not found.");
+            : ConditionResult.ToFailureAsync(null, "Product not found.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
         ProductValidatorStates.HasName, "Product name is required.")]
     private Task<ConditionResult> ValidateName(DataFilter<string, Product> f)
         => !string.IsNullOrWhiteSpace(f.Share?.Name)
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Product name is required.");
+            : ConditionResult.ToFailureAsync(null, "Product name is required.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
         ProductValidatorStates.HasValidOptionalUrl, "Website must be an HTTP(S) URL.")]
     private Task<ConditionResult> ValidateUrl(DataFilter<string, Product> f)
     {
         if (f.Share is null)
-            return ConditionResult.ToFailureAsync("Product not found.");
+            return ConditionResult.ToFailureAsync(null, "Product not found.");
         var value = f.Share.Website;
         var valid = value is null || (Uri.TryCreate(value, UriKind.Absolute, out var uri)
             && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps));
         return valid ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Website must be an HTTP(S) URL.");
+            : ConditionResult.ToFailureAsync(null, "Website must be an HTTP(S) URL.");
     }
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
-        ProductValidatorStates.MatchesActive, "Active state does not match.",
-        Value = ProductFeatureKeys.Active)]
-    private Task<ConditionResult> ValidateActive(DataFilter<bool, Product> f)
-        => f.Share is not null && f.Share.IsActive == f.Value
+        ProductValidatorStates.MatchesActive, "Active state does not match.")]
+    private Task<ConditionResult> ValidateActive(DataFilter<bool?, Product> f)
+        => f.Share is not null && f.Value is bool expected && f.Share.IsActive == expected
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Active state does not match.");
+            : ConditionResult.ToFailureAsync(null, "Active state does not match.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
         ProductValidatorStates.HasValidPrice, "Price must be nonnegative.")]
     private Task<ConditionResult> ValidatePrice(DataFilter<decimal, Product> f)
         => HasNonnegativePrice(f.Share)
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Price must be nonnegative.");
+            : ConditionResult.ToFailureAsync(null, "Price must be nonnegative.");
 
     private static bool HasNonnegativePrice(Product? product)
         => product is not null && product.Price >= 0m;
@@ -97,33 +90,25 @@ public class ProductValidatorContext
     private Task<ConditionResult> ValidateTags(DataFilter<string, Product> f)
         => f.Share?.Tags?.Any(t => !string.IsNullOrWhiteSpace(t)) == true
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("At least one nonblank tag is required.");
+            : ConditionResult.ToFailureAsync(null, "At least one nonblank tag is required.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
-        ProductValidatorStates.HasKind, "Product kind does not match.",
-        Value = ProductFeatureKeys.Kind)]
+        ProductValidatorStates.HasKind, "Product kind does not match.")]
     private Task<ConditionResult> ValidateKind(DataFilter<string, Product> f)
         => f.Share is not null && !string.IsNullOrWhiteSpace(f.Value)
             && string.Equals(f.Share.Kind, f.Value, StringComparison.OrdinalIgnoreCase)
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Product kind does not match.");
+            : ConditionResult.ToFailureAsync(null, "Product kind does not match.");
 
-    // Fixed states deliberately have separate handlers until the host confirms
-    // whether attribute Value is automatically copied to f.Value.
+    // Fixed constants override caller Value in the pinned checker source.
     [RegisterConditionValidator(typeof(ProductValidatorStates),
-        ProductValidatorStates.IsDigital, "Product is not digital.")]
-    private Task<ConditionResult> ValidateDigital(DataFilter<string, Product> f)
-        => MatchFixedKind(f.Share, ProductKinds.Digital);
-
+        ProductValidatorStates.IsDigital, "Product is not digital.", Value = ProductKinds.Digital)]
     [RegisterConditionValidator(typeof(ProductValidatorStates),
-        ProductValidatorStates.IsPhysical, "Product is not physical.")]
-    private Task<ConditionResult> ValidatePhysical(DataFilter<string, Product> f)
-        => MatchFixedKind(f.Share, ProductKinds.Physical);
-
-    private static Task<ConditionResult> MatchFixedKind(Product? product, string expected)
-        => product is not null && string.Equals(product.Kind, expected, StringComparison.OrdinalIgnoreCase)
-            ? ConditionResult.ToSuccessAsync(product)
-            : ConditionResult.ToFailureAsync("Product kind does not match.");
+        ProductValidatorStates.IsPhysical, "Product is not physical.", Value = ProductKinds.Physical)]
+    private Task<ConditionResult> ValidateFixedKind(DataFilter<string, Product> f)
+        => !string.IsNullOrWhiteSpace(f.Value)
+            ? ValidateKind(f)
+            : ConditionResult.ToFailureAsync(null, "Missing fixed kind.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
         ProductValidatorStates.IsInKinds, "Product kind is not allowed.")]
@@ -132,7 +117,7 @@ public class ProductValidatorContext
             && f.Value?.Any(kind => string.Equals(kind, f.Share.Kind,
                 StringComparison.OrdinalIgnoreCase)) == true
             ? ConditionResult.ToSuccessAsync(f.Share)
-            : ConditionResult.ToFailureAsync("Product kind is not allowed.");
+            : ConditionResult.ToFailureAsync(null, "Product kind is not allowed.");
 
     [RegisterConditionValidator(typeof(ProductValidatorStates),
         ProductValidatorStates.HasActiveCategory, "Category is missing or inactive.")]

@@ -6,6 +6,10 @@ For agent-native generation, async return correctness, registration, caching and
 
 For the reusable template, complete illustrative examples and consumer invocation, use [Validator generation](validator-generation.md) first.
 
+## Source compatibility warning
+
+This original example is intentionally preserved, not canonical generated code. The pinned checker implementation confirms that a matching attribute Value overwrites caller Value. The string keys "category", "language" and "dialect" can therefore overwrite the desired strings; the string "is_standard" does not match bool and is ignored. Remove such attribute values for runtime comparisons; keep key mapping outside the handler or in the actual host's Name/Items contract. Use nullable bool for required input and check presence. Use ToFailureAsync(null, message) rather than ToFailureAsync(message), which puts the message in Result. Check nested payload type and null Share explicitly. See [actual runtime contract](condition-checker.md) and [corrected reusable examples](validator-generation.md). The resolved package may differ from the pinned source.
+
 ## Design
 
 | Component | Role in the example |
