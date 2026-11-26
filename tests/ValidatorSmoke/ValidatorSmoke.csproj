@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="$(CheckerSource)/WasmAI.ConditionChecker.csproj" Condition="'$(UsePublishedChecker)' != 'true'" />
+    <PackageReference Include="WasmAI.ConditionChecker" Version="1.0.1" Condition="'$(UsePublishedChecker)' == 'true'" />
+    <Compile Include="$(AutoGeneratorSource)/WasmAI.AutoGenerator/Conditions/BaseConditionChecker.cs" Link="Upstream/BaseConditionChecker.cs" />
+    <Compile Include="$(AutoGeneratorSource)/WasmAI.AutoGenerator/Conditions/BaseValidatorContext.cs" Link="Upstream/BaseValidatorContext.cs" />
+    <Compile Include="$(AutoGeneratorSource)/WasmAI.AutoGenerator/Conditions/Config.cs" Link="Upstream/Config.cs" />
+    <Compile Include="$(AutoGeneratorSource)/WasmAI.AutoGenerator.Config/Base/Interfaces.cs" Link="Upstream/Interfaces.cs" />
+    <Compile Include="../../skills/autogenerator-api-skills/assets/examples/validators/*.cs.txt" Link="Examples/%(Filename)" />
+  </ItemGroup>
+</Project>
